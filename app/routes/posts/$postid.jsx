@@ -7,7 +7,7 @@ export default function Post() {
 
     return (
         <div>
-            <h2>You are currently accessing {params.postid} post</h2>
+            <h2>You are currently accessing {params.postId} post</h2>
         </div>
     )
 }
