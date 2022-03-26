@@ -1,4 +1,5 @@
-import { LiveReload, Outlet, Meta, Link, Links } from 'remix'
+import { LiveReload, Outlet, Meta, Link } from 'remix'
+import globalStylesUrl from '~/styles/global.css';
 
 export const meta = () => {
   return {
@@ -22,6 +23,7 @@ function Document({ children }) {
   return (
     <html lang="en">
       <head>
+        <link rel='stylesheet' href={globalStylesUrl} />
         <Meta />
       </head>
       <body>
