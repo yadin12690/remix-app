@@ -1,18 +1,16 @@
 import { Link, redirect } from "remix"
+import { db } from '~/utils/db.server'
 
 // In this action method we get when user submit the form, this is Remix hook.
 export const action = async ({ request }) => { // In requrest we get can get user data and more.
     const form = await request.formData(); // Here we wait until form is send data to server and than we have the data user sent.
-    const postTitle = form.get('postTitle');
-    const postBody = form.get('postBody');
+    const title = form.get('title');
+    const body = form.get('body');
 
-    const formFields = { postBody, postTitle };
+    const formFields = { title, body };
 
-    console.log(formFields); // This console log the form data in the console of the IDE because is server side!
-
-    // @todo - submit to DB!
-
-    return redirect('/posts'); // At the end, when post is added we redirect user to Post list using redirect hook from Remix.
+    const post = await db.post.create({ data: formFields });
+    return redirect(`/posts/${post.id}`); // At the end, when post is added we redirect user to Post list using redirect hook from Remix.
 }
 
 function NewPost() {
@@ -29,11 +27,11 @@ function NewPost() {
                 <form method='POST'>
                     <div className="form-control">
                         <label htmlFor='title'>Title</label>
-                        <input type='text' name='postTitle' id="title"></input>
+                        <input type='text' name='title' id="title"></input>
                     </div>
                     <div className="form-control">
                         <label htmlFor='body'>Body</label>
-                        <textarea name='postBody' id="body"></textarea>
+                        <textarea name='body' id="body"></textarea>
                     </div>
                     <button type='submit' className="btn btn-block">Add Post!</button>
                 </form>
