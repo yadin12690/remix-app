@@ -55,3 +55,18 @@ function Layout({ children }) {
     </>
   )
 }
+
+// This the main error handling. it's come from Remix and catch most of the errors.
+// If we want to catch spesific error in route we should put it in the right route.
+export function ErrorBoundary({ error }) {
+  console.log(error);
+  return (
+    <Document>
+      <Layout>
+        <h1>Error accured</h1>
+        <p>{error.message}</p>
+
+      </Layout>
+    </Document>
+  )
+}

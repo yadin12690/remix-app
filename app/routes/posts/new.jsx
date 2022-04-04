@@ -3,8 +3,14 @@ import { Link, redirect } from "remix"
 // In this action method we get when user submit the form, this is Remix hook.
 export const action = async ({ request }) => { // In requrest we get can get user data and more.
     const form = await request.formData(); // Here we wait until form is send data to server and than we have the data user sent.
+    const postTitle = form.get('postTitle');
+    const postBody = form.get('postBody');
 
-    console.log(form); // This console log the form data in the console of the IDE because is server side!
+    const formFields = { postBody, postTitle };
+
+    console.log(formFields); // This console log the form data in the console of the IDE because is server side!
+
+    // @todo - submit to DB!
 
     return redirect('/posts'); // At the end, when post is added we redirect user to Post list using redirect hook from Remix.
 }
