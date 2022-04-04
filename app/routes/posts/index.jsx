@@ -14,8 +14,11 @@ export const loader = () => {
 function PostItems() {
     const { posts } = useLoaderData();
     return (
-        <div>
-            <h1>This is post items route(index)</h1>
+        <>
+            <div className='page-header'>
+                <h1>This is post items route(index)</h1>
+                <Link to='/posts/new' className='btn'>New Post</Link>
+            </div>
             <ul className='posts-list'>
                 {posts.map((post) => (
                     <li key={post.id}>
@@ -25,7 +28,8 @@ function PostItems() {
                     </li>
                 ))}
             </ul>
-        </div>
+
+        </>
     )
 }
 
