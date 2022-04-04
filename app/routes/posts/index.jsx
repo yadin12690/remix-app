@@ -1,13 +1,14 @@
 import { useLoaderData, Link } from 'remix'
+import { db } from '~/utils/db.server'
 
 //This funciton come from the server and we can fetch data or something that we want from the server.
-export const loader = () => {
+export const loader = async () => {
     const data = {
-        posts: [
-            { id: 1, title: 'Post 1', body: 'This is the body post 1' },
-            { id: 2, title: 'Post 2', body: 'This is the body post 2' },
-            { id: 3, title: 'Post 3', body: 'This is the body post 3' },
-        ]
+        posts: await db.post.findMany({
+            take: 20, // Will take only 20 posts.
+            select: { id: true, title: true, createdAt: true }, // This will specify which fields to get.
+            orderBy: { createdAt: 'desc' } // This will set the data we get in desc order.
+        })
     }
     return data;
 }
@@ -24,6 +25,7 @@ function PostItems() {
                     <li key={post.id}>
                         <Link to={post.id}>
                             <h3>{post.title}</h3>
+                            {new Date(post.createdAt).toLocaleDateString()}
                         </Link>
                     </li>
                 ))}
