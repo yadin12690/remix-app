@@ -1,5 +1,7 @@
-import { LiveReload, Outlet, Meta, Link, Links } from 'remix'
-import globalStylesUrl from '~/styles/global.css';
+import { LiveReload, Outlet, Meta, Link, Links, useLoaderData } from 'remix'
+import globalStylesUrl from '~/styles/global.css'
+import { getUser } from '~/utils/session.server'
+
 
 export const links = () => [{ rel: 'stylesheet', href: globalStylesUrl }]
 
@@ -9,6 +11,15 @@ export const meta = () => {
     description: 'A description for the route',
     keywords: 'remix, javascript, react'
   }
+}
+
+export const loader = async ({ request }) => {
+  // We bring the user that logged in data.
+  const user = await getUser(request);
+  const data = {
+    user,
+  }
+  return data;
 }
 
 export default function App() {
@@ -37,6 +48,8 @@ function Document({ children }) {
 }
 
 function Layout({ children }) {
+  const { user } = useLoaderData;
+
   return (
     <>
       <nav className="navbar">
