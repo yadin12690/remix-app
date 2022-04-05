@@ -7,6 +7,8 @@ function badRequest(data) {
 
 export const action = async ({ request }) => {
     const form = await request.formData();
+
+    // That code get the values from the submited form
     const loginType = form.get('loginType');
     const userName = form.get('userName');
     const pswrd = form.get('password');
@@ -19,12 +21,12 @@ export const action = async ({ request }) => {
         pswrd: validatePassword(pswrd),
     }
 
+    // First before submit the form we need to validate the fields.
     // If some of the values change we get and check if there are error so we return 400 code error.
     if (Object.values(fieldErrors).some(Boolean)) {
         console.log(fieldErrors);
         return badRequest({ fieldErrors, formFields })
     }
-
 }
 
 function Login() {

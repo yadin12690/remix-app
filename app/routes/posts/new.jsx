@@ -21,6 +21,8 @@ function badRequest(data) {
 // In this action method we get when user submit the form, this is Remix hook.
 export const action = async ({ request }) => { // In requrest we get can get user data and more.
     const form = await request.formData(); // Here we wait until form is send data to server and than we have the data user sent.
+
+    // That code get the values from the submited form
     const title = form.get('title');
     const body = form.get('body');
 
@@ -32,6 +34,7 @@ export const action = async ({ request }) => { // In requrest we get can get use
         body: validateBody(body),
     }
 
+    // First before submit the form we need to validate the fields.
     // If some of the values change we get and check if there are error so we return 400 code error.
     if (Object.values(fieldErrors).some(Boolean)) {
         console.log(fieldErrors);
